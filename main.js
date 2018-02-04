@@ -1,7 +1,7 @@
 let http = require("http");
-var fs = require("fs");
-var sleep = require('sleep');
-var events = require('events');
+let fs = require("fs");
+let sleep = require('sleep');
+let events = require('events');
 
 http.createServer(function (request, response) {
    // Send the HTTP header
@@ -18,7 +18,7 @@ console.log('Server running at http://127.0.0.1:8081/');
 
 // blocking IO
 
-var data = fs.readFileSync('input.txt');
+let data = fs.readFileSync('input.txt');
 
 console.log(data.toString());
 console.log("data read");
@@ -30,6 +30,27 @@ fs.readFile('input.txt', function (err, data) {
    console.log(data.toString());
 });
 
-sleep.sleep(3);
+sleep.sleep(1);
 
 console.log("data read?");
+
+// event loop
+
+let eventEmitter = new events.EventEmitter();
+
+let connectHandler = function connected(){
+    console.log('connection successfull.');
+
+    // Fire the data_received event
+    eventEmitter.emit('data_received');
+}
+
+// Bind the connection event with the handler
+eventEmitter.on('connection', connectHandler);
+
+// Bind the data_received event with the anonymous function
+eventEmitter.on('data_received', function(){
+    console.log('data received succesfully.');
+});
+
+eventEmitter.emit('connection');
