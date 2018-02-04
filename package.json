@@ -1,0 +1,24 @@
+{
+  "name": "node-training",
+  "version": "1.0.0",
+  "description": "learning Node.js",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "sleep": "^*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YNedderhoff/node-training.git"
+  },
+  "author": "Yanick Nedderhoff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YNedderhoff/node-training/issues"
+  },
+  "homepage": "https://github.com/YNedderhoff/node-training#readme"
+}

@@ -1,4 +1,7 @@
-var http = require("http");
+let http = require("http");
+var fs = require("fs");
+var sleep = require('sleep');
+var events = require('events');
 
 http.createServer(function (request, response) {
    // Send the HTTP header
@@ -12,3 +15,21 @@ http.createServer(function (request, response) {
 
 // Console will print the message
 console.log('Server running at http://127.0.0.1:8081/');
+
+// blocking IO
+
+var data = fs.readFileSync('input.txt');
+
+console.log(data.toString());
+console.log("data read");
+
+// non-blocking IO
+
+fs.readFile('input.txt', function (err, data) {
+   if (err) return console.error(err);
+   console.log(data.toString());
+});
+
+sleep.sleep(3);
+
+console.log("data read?");
