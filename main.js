@@ -2,7 +2,7 @@ let http = require("http");
 let fs = require("fs");
 let sleep = require('sleep');
 let events = require('events');
-
+/*
 http.createServer(function (request, response) {
    // Send the HTTP header
    // HTTP Status: 200 : OK
@@ -33,24 +33,43 @@ fs.readFile('input.txt', function (err, data) {
 sleep.sleep(1);
 
 console.log("data read?");
+*/
 
 // event loop
 
-let eventEmitter = new events.EventEmitter();
+var eventEmitter = new events.EventEmitter();
 
-let connectHandler = function connected(){
-    console.log('connection successfull.');
-
-    // Fire the data_received event
-    eventEmitter.emit('data_received');
+// listener #1
+var listner1 = function listner1() {
+   console.log('listner1 executed.');
 }
 
-// Bind the connection event with the handler
-eventEmitter.on('connection', connectHandler);
+// listener #2
+var listner2 = function listner2() {
+  console.log('listner2 executed.');
+}
 
-// Bind the data_received event with the anonymous function
-eventEmitter.on('data_received', function(){
-    console.log('data received succesfully.');
-});
+// Bind the connection event with the listner1 function
+eventEmitter.addListener('connection', listner1);
 
+// Bind the connection event with the listner2 function
+eventEmitter.on('connection', listner2);
+
+var eventListeners = require('events').EventEmitter.listenerCount
+   (eventEmitter,'connection');
+console.log(eventListeners + " Listner(s) listening to connection event");
+
+// Fire the connection event 
 eventEmitter.emit('connection');
+
+// Remove the binding of listner1 function
+eventEmitter.removeListener('connection', listner1);
+console.log("Listner1 will not listen now.");
+
+// Fire the connection event 
+eventEmitter.emit('connection');
+
+eventListeners = require('events').EventEmitter.listenerCount(eventEmitter,'connection');
+console.log(eventListeners + " Listner(s) listening to connection event");
+
+console.log("Program Ended.");
